@@ -1,6 +1,6 @@
 import pygame
 from circleshape import CircleShape
-from constants import PLAYER_RADIUS, PLAYER_SPEED, PLAYER_TURN_SPEED
+from constants import PLAYER_RADIUS, PLAYER_SPEED, PLAYER_TURN_SPEED, SHOT_RADIUS
 
 class Player(CircleShape):
     def __init__(self, x, y):
@@ -36,8 +36,15 @@ class Player(CircleShape):
         forward = pygame.Vector2(0, 1).rotate(self.rotation)
         self.position += forward * PLAYER_SPEED * dt
 
-    
-
     def rotate(self, dt): #rotate player
         self.rotation += PLAYER_TURN_SPEED * dt
-    
+class Shot (CircleShape):
+    def __init__(self, x, y, radius):
+        # Call the parent class (CircleShape) constructor
+        super().__init__(x, y, SHOT_RADIUS) # Chama o construtor da classe CircleShape
+    def draw(self, screen):
+        # Desenha o asteroide
+        pygame.draw.circle(screen, (255, 255, 255), self.position, SHOT_RADIUS, 5)
+    def update(self, dt):
+       # Atualiza a posição do asteroide
+        self.position += self.velocity * dt

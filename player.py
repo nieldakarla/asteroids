@@ -23,9 +23,7 @@ class Player(CircleShape):
     
     def update(self, dt):
         keys = pygame.key.get_pressed()
-
-        if self.shot_timer > 0:
-            self.shot_timer -= dt  # Decrease timer by dt
+        self.shot_timer -= dt  # Decrease timer by dt
 
         if keys[pygame.K_a]:
             self.rotate(-dt) # Rotaciona para a esquerda
@@ -46,13 +44,13 @@ class Player(CircleShape):
         self.rotation += PLAYER_TURN_SPEED * dt
     
     def shoot(self):
-        if self.shot_timer <= 0:  # We'll implement this check in step 3
-            x, y = self.position.xy
-            shot = Shot(x, y)
-            shot.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED   
-            self.shot_timer = PLAYER_SHOOT_COOLDOWN  # Reset the timer to the cooldown value  
-            return shot  # Return the shot object so it can be added to the game
-        return None  # Return None if we can't shoot
+        if self.shot_timer > 0:
+            return
+        self.shot_timer = PLAYER_SHOOT_COOLDOWN  # Reset the timer to the cooldown value  
+        x, y = self.position.xy
+        shot = Shot(x, y)
+        shot.velocity = pygame.Vector2(0, 1).rotate(self.rotation) * PLAYER_SHOOT_SPEED   
+        
 class Shot (CircleShape):
     def __init__(self, x, y):
         # Call the parent class (CircleShape) constructor

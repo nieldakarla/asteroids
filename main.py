@@ -1,6 +1,6 @@
 import pygame
 from constants import *
-from player import Player
+from player import Player, Shot
 from asteroid import Asteroid
 from asteroidfield import AsteroidField
 def main():
@@ -14,6 +14,7 @@ def main():
     updatable = pygame.sprite.Group() #cria grupos
     drawable = pygame.sprite.Group() #cria grupos
     asteroid = pygame.sprite.Group() #cria grupos
+    shots = pygame.sprite.Group()
 
     # Definir os containers para o Player, Asteroid e AsteroidField
 
@@ -22,6 +23,8 @@ def main():
     Asteroid.containers = (asteroid, updatable, drawable) #grupos viram containers do Asteroid.
 
     AsteroidField.containers = (updatable) #grupos viram containers do AsteroidField.
+
+    Shot.containers = (shots, updatable, drawable)
 
     player = Player(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2) # Criando o jogador
     asteroidfield = AsteroidField() # Instanciando o campo de asteroides
